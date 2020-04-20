@@ -1,10 +1,10 @@
 --[[RageUI Stuff]]
 players = {}
-RMenu.Add('vrpadmin', 'main', RageUI.CreateMenu("VRP Admin", "~b~Admin Menu"))
+
 selectedPlayer = {}
 
 players = {}
-RMenu.Add('vrpadmin', 'main', RageUI.CreateMenu("VRP Admin", "~b~Admin Menu"))
+RMenu.Add('vrpadmin', 'main', RageUI.CreateMenu(cfg.langs[cfg.lang].title, cfg.langs[cfg.lang].subtitle))
 RMenu.Add('main', 'subMenu', RageUI.CreateSubMenu(RMenu:Get('vrpadmin', 'main')))
 selectedPlayer = {}
 
@@ -89,7 +89,7 @@ end)
 ---[[Get Message Functions]]
 
 function getKickUserMsg(id)
-	AddTextEntry('FMMC_MPM_NA', "Kick Message:")
+	AddTextEntry('FMMC_MPM_NA', cfg.langs[cfg.lang].kickPlayerPrompt)
 	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Kick Message:", "", "", "", "", 30)
     while (UpdateOnscreenKeyboard() == 0) do
         DisableAllControlActions(0);
@@ -106,7 +106,7 @@ function getKickUserMsg(id)
 end
 
 function getBanUserMsg(id)
-	AddTextEntry('FMMC_MPM_NA', "Ban Message:")
+	AddTextEntry('FMMC_MPM_NA', cfg.langs[cfg.lang].banPlayerPrompt)
 	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Ban Message:", "", "", "", "", 30)
     while (UpdateOnscreenKeyboard() == 0) do
         DisableAllControlActions(0);
@@ -126,7 +126,7 @@ end
 
 function banPlayerBtn(player) 
     
-    RageUI.Button("Ban Player" , "Drop the ban hammer! " , {
+    RageUI.Button(cfg.langs[cfg.lang].banPlayer , cfg.langs[cfg.lang].banPlayerDesc , {
         LeftBadge = nil,
         RightBadge = nil,
         RightLabel = nil
@@ -139,7 +139,7 @@ end)
 end
 
 function kickPlayerBtn(player) 
-    RageUI.Button("Kick Player" , "Give em' a quick boot!" , {
+    RageUI.Button(cfg.langs[cfg.lang].kickPlayer , cfg.langs[cfg.lang].kickPlayerDesc , {
         LeftBadge = nil,
         RightBadge = nil,
         RightLabel = nil
@@ -152,7 +152,7 @@ end)
 
 end
 function revPlayerBtn(player) 
-    RageUI.Button("Revive Player" , "Get em' up quick" , {
+    RageUI.Button(cfg.langs[cfg.lang].revPlayer , cfg.langs[cfg.lang].revPlayerDesc , {
         LeftBadge = nil,
         RightBadge = nil,
         RightLabel = nil
@@ -171,7 +171,7 @@ end)
 
 end
 function tp2PlayerBtn(player) 
-    RageUI.Button("Teleport to player" , "It does what it says" , {
+    RageUI.Button(cfg.langs[cfg.lang].tp2Player , cfg.langs[cfg.lang].tp2PlayerDesc , {
         LeftBadge = nil,
         RightBadge = nil,
         RightLabel = nil
@@ -184,7 +184,7 @@ end)
 
 end
 function tp2meBtn(player) 
-    RageUI.Button("Teleport player to me" , "Also does what it says" , {
+    RageUI.Button(cfg.langs[cfg.lang].tp2me , cfg.langs[cfg.lang].tp2meDesc , {
         LeftBadge = nil,
         RightBadge = nil,
         RightLabel = nil
@@ -197,7 +197,7 @@ end)
 
 end
 function frPlayerBtn(player) 
-    RageUI.Button("Freeze Player" , "Stop them dead in their tracks!" , {
+    RageUI.Button(cfg.langs[cfg.lang].freezePlayer , cfg.langs[cfg.lang].freezePlayerDesc , {
         
     }, true, function(Hovered, Active, Selected)
         if Selected then
