@@ -1,6 +1,6 @@
 # VRP Admin Menu
 
-Hello everyone, I have been working on this project for a while now and are very happy to make it public now. If you have any bugs or issue feel free to dm me on discord AL#4610
+Hello everyone, I have been working on this project for a while now and are very happy to make it public now. If you have any bugs or issue feel free to join my [Discord](https://discord.gg/6QtxkZ8)
 
 Features:
 * Easiest Admin Menu to use within the vRP framework
