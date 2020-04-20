@@ -25,22 +25,22 @@ RageUI.CreateWhile(1.0, RMenu:Get('vrpadmin', 'main'), nil, function()
     end)
     
     RageUI.IsVisible(RMenu:Get('main', 'subMenu'), true, true, true, function()
-        if cfg.buttonsEnabled["ban"] then
+        if cfg.buttonsEnabled["ban"][1] and buttons["ban"] then
             banPlayerBtn(selectedPlayer)
         end
-        if cfg.buttonsEnabled["kick"] then 
+        if cfg.buttonsEnabled["kick"][1] and buttons["kick"]then 
             kickPlayerBtn(selectedPlayer)
         end
-        if cfg.buttonsEnabled["revive"] then
+        if cfg.buttonsEnabled["revive"][1] and buttons["revive"] then
             revPlayerBtn(selectedPlayer)
         end
-        if cfg.buttonsEnabled["FREEZE"] then
+        if cfg.buttonsEnabled["FREEZE"][1] and buttons["FREEZE"]then
             frPlayerBtn(selectedPlayer)
         end
-        if cfg.buttonsEnabled["TP2"] then 
+        if cfg.buttonsEnabled["TP2"][1] and buttons["TP2"] then 
             tp2PlayerBtn(selectedPlayer)
         end
-        if cfg.buttonsEnabled["TP2ME"] then 
+        if cfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"]then 
             tp2meBtn(selectedPlayer)
         end
          
@@ -54,9 +54,9 @@ RageUI.CreateWhile(1.0, RMenu:Get('vrpadmin', 'main'), nil, function()
     end)
 end)
 RegisterNetEvent('TBRP:SendPlayersInfo')
-AddEventHandler('TBRP:SendPlayersInfo', function(players_table) 
+AddEventHandler('TBRP:SendPlayersInfo', function(players_table, btns) 
     players = players_table
-    
+    buttons = btns
     RageUI.Visible(RMenu:Get('vrpadmin', "main"), not RageUI.Visible(RMenu:Get('vrpadmin', "main")))
 end)
 

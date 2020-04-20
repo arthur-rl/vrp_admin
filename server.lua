@@ -12,13 +12,29 @@ AddEventHandler('TBRP:GetPlayerInformation', function()
     if vRP.hasPermission({user_id, cfg.perm}) then
     players = GetPlayers()
     players_table = {}
+    menu_btns_table = {}
     for i, p in pairs(players) do 
         name = GetPlayerName(p)
         user_id = vRP.getUserId({p})
         players_table[p] = {name, p, user_id}
         
     end
-    TriggerClientEvent("TBRP:SendPlayersInfo", source, players_table)
+    if cfg.IgnoreButtonPerms == false then 
+        for i, b in pairs(cfg.buttonsEnabled) do
+            if b[1] and vRP.hasPermission({user_id, b[2]}) then 
+                menu_btns_table[i] = true
+            else 
+                menu_btns_table[i] = false
+            end
+            
+        end
+    else
+        for j, t in pairs(cfg.buttonsEnabled) do
+                menu_btns_table[j] = true
+        end
+    end
+    
+    TriggerClientEvent("TBRP:SendPlayersInfo", source, players_table, menu_btns_table)
 end
     
 end)
