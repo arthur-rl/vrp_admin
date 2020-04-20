@@ -31,7 +31,7 @@ How to install:
 Credits:
 * [RageUI](https://github.com/iTexZoz/RageUI) for the easy creation of the admin menu.
 * [Bxrks](https://github.com/Bxrkss) for help with fixes and making the freeze function.
-* [Spike](https://github.com/SpikeScarlatti) Helped getting the submenus to work! 
+* [Spike](https://github.com/SpikeScarlatti) Helped fix the submenu bug. Plus the awesome French translation
 
 License:
 [You can find the license by clicking here](https://github.com/arthur-rl/vrp_admin/blob/master/LICENSE) 
