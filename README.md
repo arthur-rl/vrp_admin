@@ -8,6 +8,7 @@ Features:
 * Uses vRP groups to justify use of the menu
 * Easily configurable to your liking (can enable or disable any button.)
 * Admins can't ban admins. (this is configurable)
+* Multiple Languages
 
 Notes:
 * This is only limited to the vRP framework, feel free to edit it to your liking but the default one that comes within the [GitHub](https://github.com/arthur-rl/vrp_admin) is vRP.
@@ -40,4 +41,4 @@ If you would like a NativeUI Version of this menu click [here](https://github.co
 # Change Log
 * 1.00 Release
 * 1.01 Added Permissions for individual buttons
-
+* 1.02 Added multiple language support
