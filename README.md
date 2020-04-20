@@ -22,6 +22,11 @@ How to install:
 6. Start RageUI before vrp_admin,
 7. Start your server and have fun!
 
+# Screenshots
+![Image of menu](https://arthurl.is-inside.me/cHJ9xarw.png)
+![Image of menu](https://arthurl.is-inside.me/HWHfuShF.png)
+
+
 Credits:
 * [RageUI](https://github.com/iTexZoz/RageUI) for the easy creation of the admin menu.
 * [Bxrks](https://github.com/Bxrkss) for help with fixes and making the freeze function.
@@ -31,4 +36,6 @@ License:
 [You can find the license by clicking here](https://github.com/arthur-rl/vrp_admin/blob/master/LICENSE) 
 
 If you would like a NativeUI Version of this menu click [here](https://github.com/bxrkss/vrp_adminmenu)
+
+
 
