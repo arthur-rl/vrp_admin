@@ -1,0 +1,251 @@
+--[[RageUI Stuff]]
+players = {}
+RMenu.Add('vrpadmin', 'main', RageUI.CreateMenu("VRP Admin", "~b~Admin Menu"))
+selectedPlayer = {}
+
+players = {}
+RMenu.Add('vrpadmin', 'main', RageUI.CreateMenu("VRP Admin", "~b~Admin Menu"))
+RMenu.Add('main', 'subMenu', RageUI.CreateSubMenu(RMenu:Get('vrpadmin', 'main')))
+selectedPlayer = {}
+
+RageUI.CreateWhile(1.0, RMenu:Get('vrpadmin', 'main'), nil, function()
+    
+    RageUI.IsVisible(RMenu:Get('vrpadmin', 'main'), true, true, true, function()
+        for k, v in pairs(players) do 
+            RageUI.Button("["..v[2].."] "..v[1] , "Name: ".. v[1].." User ID: "..v[3].." Server ID: "..v[2], {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    RMenu:Get('main', 'subMenu'):SetTitle(v[1])
+                    RMenu:Get('main', 'subMenu'):SetSubtitle("Name: "..v[1].." User ID: "..v[3].." Server ID: ".. v[2])
+                   selectedPlayer = players[k]
+                end
+    
+             end, RMenu:Get('main', 'subMenu'))
+        end
+    end, function()
+    end)
+    
+    RageUI.IsVisible(RMenu:Get('main', 'subMenu'), true, true, true, function()
+        if cfg.buttonsEnabled["ban"] then
+            banPlayerBtn(selectedPlayer)
+        end
+        if cfg.buttonsEnabled["kick"] then 
+            kickPlayerBtn(selectedPlayer)
+        end
+        if cfg.buttonsEnabled["revive"] then
+            revPlayerBtn(selectedPlayer)
+        end
+        if cfg.buttonsEnabled["FREEZE"] then
+            frPlayerBtn(selectedPlayer)
+        end
+        if cfg.buttonsEnabled["TP2"] then 
+            tp2PlayerBtn(selectedPlayer)
+        end
+        if cfg.buttonsEnabled["TP2ME"] then 
+            tp2meBtn(selectedPlayer)
+        end
+         
+        
+        
+        
+        
+        
+
+    end, function()
+    end)
+end)
+RegisterNetEvent('TBRP:SendPlayersInfo')
+AddEventHandler('TBRP:SendPlayersInfo', function(players_table) 
+    players = players_table
+    
+    RageUI.Visible(RMenu:Get('vrpadmin', "main"), not RageUI.Visible(RMenu:Get('vrpadmin', "main")))
+end)
+
+Citizen.CreateThread(function() 
+    while true do 
+        Citizen.Wait(0)
+        if IsControlJustPressed(1, cfg.key) then
+            TriggerServerEvent('TBRP:GetPlayerInformation')
+            
+        end
+    end
+
+end)
+
+RegisterNetEvent('TBRP:FREEZE')
+AddEventHandler('TBRP:FREEZE', function()
+    isFrozen = not isFrozen
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        FreezeEntityPosition(GetPlayerPed(-1), isFrozen)
+        Citizen.Wait(0)
+    end
+end)
+
+
+
+
+---[[Get Message Functions]]
+
+function getKickUserMsg(id)
+	AddTextEntry('FMMC_MPM_NA', "Kick Message:")
+	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Kick Message:", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local result = GetOnscreenKeyboardResult()
+        if result then
+            TriggerServerEvent('TBRP:KickPlayer', id, result)
+			return result
+		end
+    end
+	return false
+end
+
+function getBanUserMsg(id)
+	AddTextEntry('FMMC_MPM_NA', "Ban Message:")
+	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Ban Message:", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local result = GetOnscreenKeyboardResult()
+        if result then
+            TriggerServerEvent('TBRP:BanPlayer', id, result)
+			return result
+		end
+    end
+	return false
+end
+
+---[[Buttons]]
+
+function banPlayerBtn(player) 
+    
+    RageUI.Button("Ban Player" , "Drop the ban hammer! " , {
+        LeftBadge = nil,
+        RightBadge = nil,
+        RightLabel = nil
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+            getBanUserMsg(player[2])
+        end
+
+end)
+end
+
+function kickPlayerBtn(player) 
+    RageUI.Button("Kick Player" , "Give em' a quick boot!" , {
+        LeftBadge = nil,
+        RightBadge = nil,
+        RightLabel = nil
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+            getKickUserMsg(player[2])
+        end
+
+end)
+
+end
+function revPlayerBtn(player) 
+    RageUI.Button("Revive Player" , "Get em' up quick" , {
+        LeftBadge = nil,
+        RightBadge = nil,
+        RightLabel = nil
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent('TBRP:REVIVE', player[2])
+        end
+        if Hovered then
+           -- My action the button is hovered by the mouse
+        end
+        if Active then
+           -- My action the button is hightlighted
+        end
+
+end)
+
+end
+function tp2PlayerBtn(player) 
+    RageUI.Button("Teleport to player" , "It does what it says" , {
+        LeftBadge = nil,
+        RightBadge = nil,
+        RightLabel = nil
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+           TriggerServerEvent('TBRP:TP2PLAYER', player[2]) 
+        end
+
+end)
+
+end
+function tp2meBtn(player) 
+    RageUI.Button("Teleport player to me" , "Also does what it says" , {
+        LeftBadge = nil,
+        RightBadge = nil,
+        RightLabel = nil
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent('TBRP:TP2ME', player[2], GetEntityCoords(PlayerPedId(-1))) 
+        end
+
+end)
+
+end
+function frPlayerBtn(player) 
+    RageUI.Button("Freeze Player" , "Stop them dead in their tracks!" , {
+        
+    }, true, function(Hovered, Active, Selected)
+        if Selected then
+           TriggerServerEvent('TBRP:FREEZEPLAYER', player[2])
+        end
+
+end)
+
+end
+
+--[[TODO: SPECTATE]]
+-- function spectatePlayerBtn(player) 
+    
+--     local playerIdx = GetPlayerFromServerId(player[2])
+--     local ped = GetPlayerPed(playerIdx)
+--     RageUI.Button("Spectate Player" , "Make sure they aint doing bad stuff" , {
+        
+--     }, true, function(Hovered, Active, Selected)
+--         if Selected then
+        
+--             spectatePlayer(ped)
+--         end
+
+-- end)
+
+-- end
+-- isSpectating = false
+
+-- function spectatePlayer(targetPed)
+-- 	local playerPed = PlayerPedId() -- yourself
+-- 	enable = true
+	
+-- 	if targetPed == playerPed then enable = false end
+
+-- 	if(enable)then
+-- 		--local targetx,targety,targetz = table.unpack(GetEntityCoords(targetPed, false))
+-- 		NetworkSetInSpectatorMode(true, targetPed)	
+-- 		SetEntityInvincible(GetPlayerPed(-1), true) 
+--         SetEntityVisible(GetPlayerPed(-1), false, 0)
+--         isSpectating = true
+-- 	else
+-- 		--local targetx,targety,targetz = table.unpack(GetEntityCoords(targetPed, false))
+-- 		NetworkSetInSpectatorMode(false, targetPed)
+--         SetEntityInvincible(GetPlayerPed(-1), false)
+--         SetEntityVisible(GetPlayerPed(-1), true, 0)
+--         isSpectating = false
+-- 	end
+-- end
+
+
+
