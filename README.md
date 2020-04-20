@@ -37,5 +37,7 @@ License:
 
 If you would like a NativeUI Version of this menu click [here](https://github.com/bxrkss/vrp_adminmenu)
 
-
+# Change Log
+* 1.00 Release
+* 1.01 Added Permissions for individual buttons
 
