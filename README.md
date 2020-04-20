@@ -28,7 +28,7 @@ Credits:
 * [Spike](https://github.com/SpikeScarlatti) Helped getting the submenus to work! 
 
 License:
-[You can find the license by clicking here](https://choosealicense.com/licenses/gpl-3.0/) 
+[You can find the license by clicking here](https://github.com/arthur-rl/vrp_admin/blob/master/LICENSE) 
 
 If you would like a NativeUI Version of this menu click [here](https://github.com/bxrkss/vrp_adminmenu)
 
