@@ -98,6 +98,7 @@ AddEventHandler(
     "TBRP:FREEZE",
     function()
         isFrozen = not isFrozen
+        FreezePlayer()
     end
 )
 
