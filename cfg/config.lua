@@ -12,11 +12,11 @@ cfg.lang = "en"
 --[[
     en = English
     fr = French
-    ger = German
     es = Spanish
     pt = Portuguese
     it = Italian
-    de = Deutsch 
+    de = German 
+    nl = Dutch
 
 
 ]]
@@ -79,24 +79,6 @@ cfg.langs = {
         tp2me = "Téléporter le joueur sur soi",
         tp2meDesc = "Amène le joueur sur votre position."
     },
-    ["ger"] = {
-        title = "VRP-Verwaltung",
-        subtitle = "Verwaltungsmenü",
-        banPlayer = "Den Spieler sperren",
-        banPlayerDesc = "Lass den Sperrhammer fallen",
-        banPlayerPrompt = "Nachricht verbieten:",
-        kickPlayer = "Spieler rausschmeißen",
-        kickPlayerDesc = "Helfen Sie ihm, schnell wegzukommen!",
-        kickPlayerPrompt = "Räumungsmeldung:",
-        revPlayer = "Spieler wiederbeleben",
-        revPlayerDesc = "Dem Spieler live helfen",
-        freezePlayer = "Den Spieler einfrieren",
-        freezePlayerDesc = "Alle Spieleraktionen stoppen",
-        tp2Player = "Zum Spieler teleportieren",
-        tp2PlayerDesc = "Sie teleportieren zum Spieler",
-        tp2me = "Teleportieren Sie den Spieler zu sich selbst",
-        tp2meDesc = "Bringen Sie den Spieler zu Ihrer Position"
-    },
     ["es"] = {
         title= "VRP Admin",
         subtitle = "Menú de Administración",
@@ -155,22 +137,41 @@ cfg.langs = {
 
     },
     ["de"] = {
-        title = "VRP-beheerder",
+        title = "VRP Admin",
+        subtitle = "Admin Menü",
+        banPlayer = "Bann Spieler",
+        banPlayerDesc = "Bannt diesen spieler",
+        banPlayerPrompt = "Bann Nachricht:",
+        kickPlayer = "Kick Spieler",
+        kickPlayerDesc = "Kick diesen spieler",
+        kickPlayerPrompt = "Kick Nachricht:",
+        revPlayer = "Belebe Spieler",
+        revPlayerDesc = "Belebe diesen spieler",
+        freezePlayer = "Freeze Player",
+        freezePlayerDesc = "Erfriere diesen spieler",
+        tp2Player = "Teleportiere zu spieler",
+        tp2PlayerDesc = "Teleportiere zu spieler",
+        tp2me = "Teleportiere Spieler zu mir",
+        tp2meDesc = "Teleportiert spieler zu mir."
+
+    },
+    ["nl"] = {
+        title = "VRP Admin",
         subtitle = "Admin Menu",
         banPlayer = "Ban Speler",
-        banPlayerDesc = "Laat de bandhamer vallen!",
-        banPlayerPrompt = "Ban Bericht:",
-        kickPlayer = "Kick Player",
-        kickPlayerDesc = "Geef ze een snelle start!",
-        kickPlayerPrompt = "Kick Bericht:",
-        revPlayer = "Herleef de speler",
-        revPlayerDesc = "Haal ze snel op.",
-        freezePlayer = "Vriesspeler",
-        freezePlayerDesc = "Stop em' dood in hun sporen",
-        tp2Player = "Teleport naar speler",
-        tp2PlayerDesc = "Het doet wat het zegt",
-        tp2me = "Teleporteren van de speler naar mij",
-        tp2meDesc = "Doet ook wat er staat."
+        banPlayerDesc = "Verban de speler van de server!",
+        banPlayerPrompt = "Ban Reden:",
+        kickPlayer = "Kick Speler",
+        kickPlayerDesc = "Geef ze een schop onder de kont!",
+        kickPlayerPrompt = "Kick Reden:",
+        revPlayer = "Revive Speler",
+        revPlayerDesc = "Gebruik een magische pleister.",
+        freezePlayer = "Bevries Speler",
+        freezePlayerDesc = "Bevries een speler!",
+        tp2Player = "Teleporteer naar speler",
+        tp2PlayerDesc = "Echt uitleg nodig?",
+        tp2me = "Teleporteer speler naar jouw.",
+        tp2meDesc = "Ja.. Uitleg is ook niet echt nodig hier..."
 
     }
 
