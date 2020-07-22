@@ -1,12 +1,8 @@
 --[[RageUI Stuff]]
-players = {}
-
-selectedPlayer = {}
-
-players = {}
-RMenu.Add("vrpadmin", "main", RageUI.CreateMenu(cfg.langs[cfg.lang].title, cfg.langs[cfg.lang].subtitle))
+local players = {}
+RMenu.Add("vrpadmin", "main", RageUI.CreateMenu(cfg.langs[cfg.lang].title, cfg.langs[cfg.lang].subtitle, 1400,100))
 RMenu.Add("vrpadmin", "subMenu", RageUI.CreateSubMenu(RMenu:Get("vrpadmin", "main")))
-selectedPlayer = {}
+local selectedPlayer = {}
 
 RageUI.CreateWhile(
     1.0,
@@ -14,40 +10,19 @@ RageUI.CreateWhile(
     nil,
     function()
         RageUI.IsVisible(
-            RMenu:Get("vrpadmin", "main"),
-            true,
-            true,
-            true,
-            function()
+            RMenu:Get("vrpadmin", "main"),true, false,true,function()
                 for k, v in pairs(players) do
-                    RageUI.Button(
-                        "[" .. v[2] .. "] " .. v[1],
-                        "Name: " .. v[1] .. " User ID: " .. v[3] .. " Server ID: " .. v[2],
-                        {RightLabel = ">>>"},
-                        true,
-                        function(Hovered, Active, Selected)
-                            if Selected then
-                                RMenu:Get("vrpadmin", "subMenu"):SetTitle(v[1])
-                                RMenu:Get("vrpadmin", "subMenu"):SetSubtitle(
-                                    "Name: " .. v[1] .. " User ID: " .. v[3] .. " Server ID: " .. v[2]
-                                )
-                                selectedPlayer = players[k]
-                            end
-                        end,
-                        RMenu:Get("vrpadmin", "subMenu")
-                    )
+                    RageUI.Button(string.format("[%s] %s" ,v[2], v[1]),"Name: " .. v[1] .. " User ID: " .. v[3] .. " Server ID: " .. v[2],{RightLabel = ">>>"},function(Hovered, Active, Selected)
+                        if Selected then
+                            RMenu:Get("vrpadmin", "subMenu"):SetTitle(v[1])
+                            RMenu:Get("vrpadmin", "subMenu"):SetSubtitle("Name: " .. v[1] .. " User ID: " .. v[3] .. " Server ID: " .. v[2])
+                            selectedPlayer = players[k]
+                        end
+                    end,RMenu:Get("vrpadmin", "subMenu"))
                 end
-            end,
-            function()
-            end
-        )
-
+            end,function()end)
         RageUI.IsVisible(
-            RMenu:Get("vrpadmin", "subMenu"),
-            true,
-            true,
-            true,
-            function()
+            RMenu:Get("vrpadmin", "subMenu"),true,false,true,function()
                 if cfg.buttonsEnabled["ban"][1] and buttons["ban"] then
                     banPlayerBtn(selectedPlayer)
                 end
@@ -66,46 +41,31 @@ RageUI.CreateWhile(
                 if cfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"] then
                     tp2meBtn(selectedPlayer)
                 end
-            end,
-            function()
-            end
-        )
+            end,function() end)
     end
 )
-RegisterNetEvent("TBRP:SendPlayersInfo")
-AddEventHandler(
-    "TBRP:SendPlayersInfo",
-    function(players_table, btns)
-        players = players_table
-        buttons = btns
-        RageUI.Visible(RMenu:Get("vrpadmin", "main"), not RageUI.Visible(RMenu:Get("vrpadmin", "main")))
-    end
-)
+RegisterNetEvent("vrp_admin:SendPlayersInfo")
+AddEventHandler("vrp_admin:SendPlayersInfo",function(players_table, btns)
+    players = players_table
+    buttons = btns
+    RageUI.Visible(RMenu:Get("vrpadmin", "main"), not RageUI.Visible(RMenu:Get("vrpadmin", "main")))
+end)
 
 Citizen.CreateThread(
     function()
         while true do
             Citizen.Wait(0)
             if IsControlJustPressed(1, cfg.key) then
-                TriggerServerEvent("TBRP:GetPlayerInformation")
+                TriggerServerEvent("vrp_admin:GetPlayerInformation")
             end
         end
     end
 )
-isFrozen = false
-RegisterNetEvent("TBRP:FREEZE")
-AddEventHandler(
-    "TBRP:FREEZE",
-    function()
-        isFrozen = not isFrozen
-        FreezePlayer()
-    end
-)
-
-function FreezePlayer() 
+local isFrozen = false
+RegisterNetEvent("vrp_admin:FREEZE")
+AddEventHandler("vrp_admin:FREEZE",function()
     FreezeEntityPosition(PlayerPedId(-1), not isFrozen)
-end
-
+end)
 ---[[Get Message Functions]]
 
 function getKickUserMsg(id)
@@ -118,7 +78,7 @@ function getKickUserMsg(id)
     if (GetOnscreenKeyboardResult()) then
         local result = GetOnscreenKeyboardResult()
         if result then
-            TriggerServerEvent("TBRP:KickPlayer", id, result)
+            TriggerServerEvent("vrp_admin:KickPlayer", id, result)
         end
     end
     return false
@@ -134,7 +94,7 @@ function getBanUserMsg(id)
     if (GetOnscreenKeyboardResult()) then
         local result = GetOnscreenKeyboardResult()
         if result then
-            TriggerServerEvent("TBRP:BanPlayer", id, result)
+            TriggerServerEvent("vrp_admin:BanPlayer", id, result)
         end
     end
     return false
@@ -143,109 +103,53 @@ end
 ---[[Buttons]]
 
 function banPlayerBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].banPlayer,
-        cfg.langs[cfg.lang].banPlayerDesc,
-        {
-            LeftBadge = nil,
-            RightBadge = nil,
-            RightLabel = nil
-        },
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                getBanUserMsg(player[2])
-            end
+    RageUI.Button(cfg.langs[cfg.lang].banPlayer,cfg.langs[cfg.lang].banPlayerDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            getBanUserMsg(player[2])
         end
-    )
+    end)
 end
 
 function kickPlayerBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].kickPlayer,
-        cfg.langs[cfg.lang].kickPlayerDesc,
-        {
-            LeftBadge = nil,
-            RightBadge = nil,
-            RightLabel = nil
-        },
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                getKickUserMsg(player[2])
-            end
+    RageUI.Button(cfg.langs[cfg.lang].kickPlayer,cfg.langs[cfg.lang].kickPlayerDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            getKickUserMsg(player[2])
         end
-    )
+    end)
 end
 function revPlayerBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].revPlayer,
-        cfg.langs[cfg.lang].revPlayerDesc,
-        {
-            LeftBadge = nil,
-            RightBadge = nil,
-            RightLabel = nil
-        },
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("TBRP:REVIVE", player[2])
-            end
-            if Hovered then
-            -- My action the button is hovered by the mouse
-            end
-            if Active then
-            -- My action the button is hightlighted
-            end
+    RageUI.Button(cfg.langs[cfg.lang].revPlayer,cfg.langs[cfg.lang].revPlayerDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent("vrp_admin:REVIVE", player[2])
         end
-    )
+        if Hovered then
+        -- My action the button is hovered by the mouse
+        end
+        if Active then
+        -- My action the button is hightlighted
+        end
+    end)
 end
 function tp2PlayerBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].tp2Player,
-        cfg.langs[cfg.lang].tp2PlayerDesc,
-        {
-            LeftBadge = nil,
-            RightBadge = nil,
-            RightLabel = nil
-        },
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("TBRP:TP2PLAYER", player[2])
-            end
+    RageUI.Button(cfg.langs[cfg.lang].tp2Player,cfg.langs[cfg.lang].tp2PlayerDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent("vrp_admin:TP2PLAYER", player[2])
         end
-    )
+    end)
 end
 function tp2meBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].tp2me,
-        cfg.langs[cfg.lang].tp2meDesc,
-        {
-            LeftBadge = nil,
-            RightBadge = nil,
-            RightLabel = nil
-        },
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("TBRP:TP2ME", player[2], GetEntityCoords(PlayerPedId(-1)))
-            end
+    RageUI.Button(cfg.langs[cfg.lang].tp2me,cfg.langs[cfg.lang].tp2meDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent("vrp_admin:TP2ME", player[2], GetEntityCoords(PlayerPedId(-1)))
         end
-    )
+    end)
 end
 function frPlayerBtn(player)
-    RageUI.Button(
-        cfg.langs[cfg.lang].freezePlayer,
-        cfg.langs[cfg.lang].freezePlayerDesc,
-        {},
-        true,
-        function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("TBRP:FREEZEPLAYER", player[2])
-            end
+    RageUI.Button(cfg.langs[cfg.lang].freezePlayer,cfg.langs[cfg.lang].freezePlayerDesc,{},function(Hovered, Active, Selected)
+        if Selected then
+            TriggerServerEvent("vrp_admin:FREEZEPLAYER", player[2])
         end
-    )
+    end)
 end
 
 --[[TODO: SPECTATE]]
